@@ -25,11 +25,11 @@ public class TicketType {
     String name;
     @Column(columnDefinition="TEXT")
     String description;
-    @Column(nullable=false,precision=10,scale=2)
+    @Column(nullable=false)
     Double price;
     @Column(name="total_quantity",nullable=false)
     Integer totalQuantity;
-    @Column(name="total_quantity",nullable=false)
+    @Column(name="remaining_quantity",nullable=false)
     Integer remainingQuantity;
     @Version
     Long version;

@@ -38,7 +38,7 @@ public class Event {
     User organizer;
     @OneToMany(mappedBy = "event",cascade = CascadeType.ALL,orphanRemoval = true)
     @Builder.Default
-    List<TicketType> ticketType=new ArrayList<>();
+    List<TicketType> ticketTypes=new ArrayList<>();
     @Column(name="created-at", nullable = false,updatable = false)
     LocalDateTime createdAt;
     @Column(name="updated_at")
@@ -60,7 +60,7 @@ public class Event {
     }
 
     public void addTicketType(TicketType ticketType){
-        this.ticketType.add(ticketType);
+        this.ticketTypes.add(ticketType);
         ticketType.setEvent(this);
     }
 }

@@ -20,7 +20,7 @@ public class CreateEventRequest {
     private String title;
     @NotBlank(message="Venue is required")
     @Size(max=500,message="Venue cannot exceed 500 characters")
-    private String value;
+    private String venue;
     @Size(max=5000,message="Description cannot exceed 5000 characters")
     private String description;
     @NotNull(message="Start time is required")

@@ -21,10 +21,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class EventService {
-    private EventRepository eventRepository;
-    private TicketTypeRepository ticketTypeRepository;
-    private UserRepository userRepository;
-    private EventMapper eventMapper;
+    private final EventRepository eventRepository;
+    private final TicketTypeRepository ticketTypeRepository;
+    private final UserRepository userRepository;
+    private final EventMapper eventMapper;
 
     @Transactional
     public EventResponse createEvent(CreateEventRequest request, UUID organizerId) {

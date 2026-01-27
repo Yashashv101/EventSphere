@@ -36,6 +36,14 @@ public class TicketType {
     @Column(name="created_at",nullable=false,updatable=false)
     LocalDateTime createdAt;
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt=LocalDateTime.now();
+        if (remainingQuantity==null) {
+            remainingQuantity=totalQuantity;
+        }
+    }
+
     public boolean hasAvailableTickets(){
         return remainingQuantity!=null && remainingQuantity>0;
     }

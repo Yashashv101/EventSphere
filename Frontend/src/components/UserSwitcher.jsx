@@ -1,4 +1,4 @@
-import {useUser} from "../context/UserContext";
+import {useUser} from "../context/UserContext.jsx";
 
 function UserSwitcher(props){
     const {currentRole,switchRole,roles}=useUser();

@@ -1,23 +1,23 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-function EventCard({event,showActions,onPublish,onClose,onAddTicketType}){
-    const formatDate=(date)=>{
-        return new Date(date).toLocaleDateString('en-US',{
-            weekday:'short',
-            year:'numeric',
-            month:'short',
-            day:'numeric',
-            hour:'2-digit',
-            minute:'2-digit',
+function EventCard({ event,showActions,onPublish,onClose,onAddTicketType}){
+    const formatDate = (date) => {
+        return new Date(date).toLocaleDateString('en-US', {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
         });
     }
-    const getStatusBadge=(status)=>{
-        const statusStyles={
-            DRAFT:'bg-amber-100 text-amber-800',
-            PUBLISHED:'bg-emerald-100 text-emerald-800',
-            CLOSED:'bg-red-100 text-red-800'
+    const getStatusBadge = (status) => {
+        const statusStyles = {
+            DRAFT: 'bg-amber-100 text-amber-800',
+            PUBLISHED: 'bg-emerald-100 text-emerald-800',
+            CLOSED: 'bg-red-100 text-red-800'
         }
-        return(
+        return (
             <span className={`px-3 py-1 rounded-full text-xs font-semibold uppercase ${statusStyles[status] || statusStyles.DRAFT}`}>
                 {status}
             </span>

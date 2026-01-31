@@ -97,7 +97,7 @@ function EventDetails(){
             </button>
             <div className="flex justify-between items-start mb-8">
                 <div className="flex items-center gap-4">
-                    <h1 className="text-3xl font-bold text-slate-800">{event.title}</h1>
+                    <h1 className="text-3xl font-bold text-white">{event.title}</h1>
                     <span className={`px-4 py-2 rounded-full text-sm font-semibold uppercase ${getStatusBadgeClass(event.status)}`}>
                         {event.status}
                     </span>
@@ -143,13 +143,13 @@ function EventDetails(){
             </div>
             {event.description && (
                 <div className="bg-white p-6 rounded-lg mb-8">
-                    <h2 className="text-xl font-semibold mb-4">Description</h2>
+                    <h2 className="text-xl text-black font-semibold mb-4">Description</h2>
                     <p className="text-slate-600 leading-relaxed">{event.description}</p>
                 </div>
             )}
             <div className="bg-white p-6 rounded-xl">
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-semibold">Ticket Types</h2>
+                    <h2 className="text-xl text-black font-semibold">Ticket Types</h2>
                     {isOrganizer && event.status === 'DRAFT' && (
                         <button
                             className="px-4 py-2 bg-indigo-500 text-white rounded-md font-medium cursor-pointer transition-all duration-200 hover:bg-indigo-600"
@@ -168,7 +168,7 @@ function EventDetails(){
                                 value={ticketFormData.name}
                                 onChange={(e) => setTicketFormData({ ...ticketFormData, name: e.target.value })}
                                 required
-                                className="p-3 border border-slate-200 rounded-md text-sm"
+                                className="p-3 border border-slate-200 rounded-md text-black text-sm"
                             />
                             <input
                                 type="number"
@@ -178,7 +178,7 @@ function EventDetails(){
                                 value={ticketFormData.price}
                                 onChange={(e) => setTicketFormData({ ...ticketFormData, price: e.target.value })}
                                 required
-                                className="p-3 border border-slate-200 rounded-md text-sm"
+                                className="p-3 border border-slate-200 rounded-md text-black text-sm"
                             />
                             <input
                                 type="number"
@@ -187,7 +187,7 @@ function EventDetails(){
                                 value={ticketFormData.totalQuantity}
                                 onChange={(e) => setTicketFormData({ ...ticketFormData, totalQuantity: e.target.value })}
                                 required
-                                className="p-3 border border-slate-200 rounded-md text-sm"
+                                className="p-3 border border-slate-200 rounded-md text-black text-sm"
                             />
                         </div>
                         <input
@@ -195,7 +195,7 @@ function EventDetails(){
                             placeholder="Description (optional)"
                             value={ticketFormData.description}
                             onChange={(e) => setTicketFormData({ ...ticketFormData, description: e.target.value })}
-                            className="w-full p-3 border border-slate-200 rounded-md text-sm mb-2"
+                            className="w-full p-3 border border-slate-200 rounded-md text-black text-sm mb-2"
                         />
                         <button
                             type="submit"

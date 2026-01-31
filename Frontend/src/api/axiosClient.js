@@ -20,7 +20,7 @@ export const setCurrentUser=(id,email)=>{
     currentUserEmail=email;
 }
 export const getCurrentUserId=()=>currentUserId;
-axiosClient.interceptors.use(
+axiosClient.interceptors.request.use(
     (config)=>{
         config.headers['X-User-Id']=currentUserId;
         config.headers['X-User-Email']=currentUserEmail;

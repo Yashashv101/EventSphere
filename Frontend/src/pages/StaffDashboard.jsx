@@ -37,7 +37,7 @@ function StaffDashboard(){
     return(
         <div className="p-8 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-2xl font-bold text-slate-800">Ticket Validation</h1>
+                <h1 className="text-2xl font-bold text-white">Ticket Validation</h1>
             </div>
             <div className="max-w-xl mx-auto">
                 <form onSubmit={handleValidate} className="bg-white p-8 rounded-xl shadow-md mb-8">
@@ -51,7 +51,7 @@ function StaffDashboard(){
                             value={qrCodeValue}
                             onChange={(e) => setQrCodeValue(e.target.value)}
                             placeholder="Paste or enter QR code value..."
-                            className="w-full p-4 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500 disabled:opacity-50"
+                            className="w-full p-4 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500 disabled:opacity-50"
                             disabled={loading}
                         />
                     </div>

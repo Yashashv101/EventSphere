@@ -27,7 +27,7 @@ function MyTickets(){
     return(
         <div className="p-8 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-2xl font-bold text-slate-800">My Tickets</h1>
+                <h1 className="text-2xl font-bold text-white">My Tickets</h1>
             </div>
             {tickets.length===0?(
                 <div className="text-center py-16 px-8 bg-slate-50 rounded-xl border-2 border-dashed border-slate-200">

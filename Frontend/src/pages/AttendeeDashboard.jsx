@@ -31,7 +31,7 @@ function AttendeeDashboard(){
     return(
         <div className="p-8 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-2xl font-bold text-slate-800">Browse Events</h1>
+                <h1 className="text-2xl font-bold text-white">Browse Events</h1>
                 <button
                     className="px-6 py-3 bg-slate-200 text-slate-600 rounded-lg font-semibold text-sm cursor-pointer transition-all duration-200 hover:bg-slate-300"
                     onClick={() => navigate('/my-tickets')}

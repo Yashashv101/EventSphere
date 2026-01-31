@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {getMyEvents,publishEvent} from "../api/eventApi";
-import EventCard from "./components/EventCard";
+import EventCard from "../components/EventCard";
 
 function OrganizerDashboard(){
     const [events,setEvents]=useState([]);
@@ -35,7 +35,7 @@ function OrganizerDashboard(){
     const handleClose=async(id)=>{
         if(window.confirm('Are you sure?')){
             try {
-                await publishEvent(id);
+                await deleteEvent(id);
                 fetchEvents();
             }catch(err){
                 alert(err.message||'Failed to close event');
@@ -50,7 +50,7 @@ function OrganizerDashboard(){
     return (
         <div className="p-8 max-w-6xl mx-auto">
             <div className="flex justify-between items-center mb-8">
-                <h1 className="text-2xl font-bold text-slate-800">My Events</h1>
+                <h1 className="text-2xl font-bold text-white">My Events</h1>
                 <button
                     className="px-6 py-3 bg-gradient-to-br from-indigo-500 to-violet-500 text-white rounded-lg font-semibold text-sm cursor-pointer transition-all duration-200 hover:-translate-y-px hover:shadow-lg hover:shadow-indigo-500/40"
                     onClick={() => navigate('/create-event')}

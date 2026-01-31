@@ -16,7 +16,7 @@ export const addTicketType=async(eventId,ticketType)=>{
     const response=await axiosClient.post(`/events/${eventId}/ticket-types`,ticketType);
     return response.data;
 }
-export const getPublishedEvent=async()=>{
+export const getPublishedEvents=async()=>{
     const response=await axiosClient.get(`/events`);
     return response.data;
 }

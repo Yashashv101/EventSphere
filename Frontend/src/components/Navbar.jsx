@@ -1,5 +1,5 @@
 import {Link,useLocation} from "react-router-dom";
-import {useUser} from "./context/UserContext";
+import {useUser} from "../context/UserContext";
 
 function Navbar() {
     const {currentRole, user} = useUser();
@@ -10,7 +10,7 @@ function Navbar() {
             case 'ORGANIZER':
                 return [
                     {path: '/', label: 'My Events'},
-                    {path: '/events', label: 'Create Event'}
+                    {path: '/create-event', label: 'Create Event'}
                 ];
             case 'ATTENDEE':
                 return [

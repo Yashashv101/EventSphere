@@ -42,7 +42,7 @@ function CreateEvent(){
                 {error && <div className="bg-red-100 text-red-800 p-4 rounded-lg mb-6">{error}</div>}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-6">
-                        <label htmlFor="title" className="block font-semibold text-gray-700 mb-2">
+                        <label htmlFor="title" className="block font-semibold text-black">
                             Event Title *
                         </label>
                         <input
@@ -55,11 +55,11 @@ function CreateEvent(){
                             minLength={3}
                             maxLength={200}
                             placeholder="Enter event title"
-                            className="w-full px-4 py-3 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
+                            className="w-full px-4 py-3 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
                         />
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="venue" className="block font-semibold text-gray-700 mb-2">
+                        <label htmlFor="venue" className="block font-semibold text-black">
                             Venue *
                         </label>
                         <input
@@ -71,11 +71,11 @@ function CreateEvent(){
                             required
                             maxLength={500}
                             placeholder="Enter venue address"
-                            className="w-full px-4 py-3 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
+                            className="w-full px-4 py-3 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
                         />
                     </div>
                     <div className="mb-6">
-                        <label htmlFor="description" className="block font-semibold text-gray-700 mb-2">
+                        <label htmlFor="description" className="block font-semibold text-black">
                             Description
                         </label>
                         <textarea
@@ -86,12 +86,12 @@ function CreateEvent(){
                             maxLength={5000}
                             rows={4}
                             placeholder="Describe your event..."
-                            className="w-full px-4 py-3 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500 resize-y"
+                            className="w-full px-4 py-3 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500 resize-y"
                         />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="mb-6">
-                            <label htmlFor="startTime" className="block font-semibold text-gray-700 mb-2">
+                            <label htmlFor="startTime" className="block font-semibold text-black">
                                 Start Time *
                             </label>
                             <input
@@ -101,11 +101,11 @@ function CreateEvent(){
                                 value={formData.startTime}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
+                                className="w-full px-4 py-3 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
                             />
                         </div>
                         <div className="mb-6">
-                            <label htmlFor="endTime" className="block font-semibold text-gray-700 mb-2">
+                            <label htmlFor="endTime" className="block font-semibold text-black">
                                 End Time *
                             </label>
                             <input
@@ -115,7 +115,7 @@ function CreateEvent(){
                                 value={formData.endTime}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 text-base border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
+                                className="w-full px-4 py-3 text-black border-2 border-slate-200 rounded-lg transition-colors duration-200 focus:outline-none focus:border-indigo-500"
                             />
                         </div>
                     </div>

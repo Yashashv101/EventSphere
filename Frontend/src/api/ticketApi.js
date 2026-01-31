@@ -1,6 +1,6 @@
 import axiosClient from "./axiosClient";
 
-export const purchaseTicket=async(ticketId)=>{
+export const purchaseTicket=async(ticketTypeId)=>{
     const response=await axiosClient.post('/tickets/purchase',{ticketTypeId});
     return response.data;
 }

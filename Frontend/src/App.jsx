@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import OrganizerDashboard from "./pages/OrganizerDashboard.jsx";
+import AttendeeDashboard from "./pages/AttendeeDashboard.jsx";
+import StaffDashboard from "./pages/StaffDashboard.jsx";
+import Navbar from "./components/Navbar.jsx";
+import CreateEvent from "./pages/CreateEvent.jsx";
+import EventDetails from "./pages/EventDetails.jsx";
+import {Routes} from "react-router-dom";
+import {useUser} from "./context/UserContext";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+function AppContent() {
+  const {currentRole}=useUser();
+  const renderDashboard=()=>{
+      switch(currentRole) {
+          case 'ORGANIZER':
+              return <OrganizerDashboard/>
+          case 'ATTENDEE':
+              return <AttendeeDashboard/>
+          case 'STAFF':
+              return <StaffDashboard/>
+          default:
+              return <AttendeeDashboard/>
+      }
+  }
+  return(
+      <div className="min-h-screen flex flex-col bg-slate-100 text-slate-800 font-sans">
+          <Navbar/>
+          <main className="flex-1 px-8 py-4 pb-8">
+              <Routes>
+                  <Route path='/' element={renderDasboard()}/>
+                  <Route path='/create-event' element={<CreateEvent/>}/>
+                  <Route path='/events/:id' element={<EventDetails/>}/>
+                  <Route path='/my-tickets' element={<MyTickets/>}/>
+              </Routes>
+          </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
-
-export default App
+function App(){
+    return(
+        <Router>
+            <UserProvider>
+                <AppContent />
+            </UserProvider>
+        </Router>
+    );
+}
+export default App;

@@ -1,50 +1,78 @@
-import {createContext,useContext,useState,useEffect} from "react";
-import {USERS,setCurrentUser} from "../api/axiosClient";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { login as apiLogin, register as apiRegister } from "../api/authApi";
 
-const UserContext=createContext();
-const USER_ROLES={
-    ORGANIZER:{
-        id:USERS.ORGANIZER,
-        email:'organizer@example.com',
-        label:'Organizer',
-        color:'#6366f1'
-    },
-    ATTENDEE:{
-        id:USERS.ATTENDEE,
-        email:'attendee@example.com',
-        label:'Attendee',
-        color:'#10b981'
-    },
-    STAFF:{
-        id:USERS.STAFF,
-        email:'staff@example.com',
-        label:'Staff',
-        color:'#f59e0b'
-    }
-}
+const UserContext = createContext();
+
+const ROLE_CONFIG = {
+    ORGANIZER: { label: 'Organizer', color: '#6366f1' },
+    ATTENDEE: { label: 'Attendee', color: '#10b981' },
+    STAFF: { label: 'Staff', color: '#f59e0b' }
+};
+
 export function UserProvider({ children }) {
-    const [currentRole, setCurrentRole] = useState('ORGANIZER');
-    const user = USER_ROLES[currentRole];
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        setCurrentUser(user.id, user.email);
-    }, [currentRole, user.id, user.email]);
-    const switchRole = (role) => {
-        if (USER_ROLES[role]) {
-            setCurrentRole(role);
+        const storedUser = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+        if (storedUser && token) {
+            try {
+                setUser(JSON.parse(storedUser));
+            } catch {
+                localStorage.removeItem('user');
+                localStorage.removeItem('token');
+            }
         }
-    };
-    const value = {
-        currentRole,
-        user,
-        switchRole,
-        roles: USER_ROLES
-    };
+        setLoading(false);
+    }, []);
+
+    const login = useCallback(async (email, password) => {
+        const response = await apiLogin(email, password);
+        const userData = {
+            id: response.userId,
+            email: response.email,
+            name: response.name,
+            role: response.role,
+            ...ROLE_CONFIG[response.role]
+        };
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(userData));
+        setUser(userData);
+        return userData;
+    }, []);
+
+    const register = useCallback(async (name, email, password, role) => {
+        const response = await apiRegister(name, email, password, role);
+        const userData = {
+            id: response.userId,
+            email: response.email,
+            name: response.name,
+            role: response.role,
+            ...ROLE_CONFIG[response.role]
+        };
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(userData));
+        setUser(userData);
+        return userData;
+    }, []);
+
+    const logout = useCallback(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+    }, []);
+
+    const isAuthenticated = !!user;
+    const currentRole = user?.role || null;
+
     return (
-        <UserContext.Provider value={value}>
+        <UserContext.Provider value={{ user, currentRole, isAuthenticated, loading, login, register, logout }}>
             {children}
         </UserContext.Provider>
     );
 }
+
 export function useUser() {
     const context = useContext(UserContext);
     if (!context) {
@@ -52,4 +80,3 @@ export function useUser() {
     }
     return context;
 }
-export { USER_ROLES };

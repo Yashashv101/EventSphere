@@ -9,11 +9,11 @@ import com.yash.eventsphere.exception.ApiException;
 import com.yash.eventsphere.mapper.EventMapper;
 import com.yash.eventsphere.repository.EventRepository;
 import com.yash.eventsphere.repository.TicketTypeRepository;
-import com.yash.eventsphere.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -23,21 +23,19 @@ import java.util.UUID;
 public class EventService {
     private final EventRepository eventRepository;
     private final TicketTypeRepository ticketTypeRepository;
-    private final UserRepository userRepository;
     private final EventMapper eventMapper;
 
     @Transactional
-    public EventResponse createEvent(CreateEventRequest request, UUID organizerId) {
+    public EventResponse createEvent(CreateEventRequest request, User organizer) {
         if (request.getEndTime().isBefore(request.getStartTime())) {
             throw ApiException.badRequest("End time must be after start time");
         }
-        User organizer = getOrCreateUser(organizerId, request);
         Event event = eventMapper.toEntity(request);
         event.setOrganizer(organizer);
         event.setStatus(EventStatus.DRAFT);
         Event savedEvent = eventRepository.save(event);
         log.info("Created event '{}' (ID: {}) by organizer {}",
-                savedEvent.getTitle(), savedEvent.getId(), organizerId);
+                savedEvent.getTitle(), savedEvent.getId(), organizer.getId());
         return eventMapper.toResponse(savedEvent);
     }
 
@@ -125,17 +123,5 @@ public class EventService {
             throw ApiException.notFound("Event", eventId);
         }
         return eventMapper.toResponse(event);
-    }
-
-    private User getOrCreateUser(UUID userId, CreateEventRequest request) {
-        return userRepository.findById(userId)
-                .orElseGet(() -> {
-                    User user = User.builder()
-                            .id(userId)
-                            .email("organizer@example.com")
-                            .role(com.yash.eventsphere.enums.UserRole.ORGANIZER)
-                            .build();
-                    return userRepository.save(user);
-                });
     }
 }

@@ -1,41 +1,41 @@
 import axios from 'axios';
 
-const API_BASE_URL="http://localhost:8080";
-export const USERS={
-    ORGANIZER:'11111111-1111-1111-1111-111111111111',
-    ATTENDEE:'22222222-2222-2222-2222-222222222222',
-    STAFF:'33333333-3333-3333-3333-333333333333'
-}
-const axiosClient=axios.create({
-    baseURL:API_BASE_URL,
-    headers:{
-        'Content-Type':'application/json'
-    }
-})
-let currentUserId=USERS.ORGANIZER;
-let currentUserEmail='organizer@example.com';
+const API_BASE_URL = "http://localhost:8080";
 
-export const setCurrentUser=(id,email)=>{
-    currentUserId=id;
-    currentUserEmail=email;
-}
-export const getCurrentUserId=()=>currentUserId;
+const axiosClient = axios.create({
+    baseURL: API_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json'
+    }
+});
+
+// Request interceptor - attach JWT token
 axiosClient.interceptors.request.use(
-    (config)=>{
-        config.headers['X-User-Id']=currentUserId;
-        config.headers['X-User-Email']=currentUserEmail;
+    (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
         return config;
     },
-    (error)=>Promise.reject(error)
-)
+    (error) => Promise.reject(error)
+);
+
+// Response interceptor - handle errors
 axiosClient.interceptors.response.use(
-    (response)=>response,
-    (error)=>{
-        const errorMsg=error.response?.data||{
-            code:'NETWORK_ERROR',
-            message:error.message
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
         }
+        const errorMsg = error.response?.data || {
+            code: 'NETWORK_ERROR',
+            message: error.message
+        };
         return Promise.reject(errorMsg);
     }
-)
+);
+
 export default axiosClient;

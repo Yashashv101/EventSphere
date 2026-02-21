@@ -41,4 +41,10 @@ public class ApiException extends RuntimeException {
     public static ApiException forbidden() {
         return forbidden("You are not authorized to perform this action");
     }
+    public static ApiException unauthorized(String message) {
+        return new ApiException(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", message);
+    }
+    public static ApiException unauthorized() {
+        return unauthorized("Authentication is required to access this resource");
+    }
 }

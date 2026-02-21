@@ -1,6 +1,8 @@
 package com.yash.eventsphere.exception;
 
 import com.yash.eventsphere.dto.common.ErrorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,6 +72,20 @@ public class GlobalExceptionHandler {
         log.error("Optimistic locking failure: {}", ex.getMessage());
         return buildResponse(HttpStatus.CONFLICT, "CONCURRENT_MODIFICATION",
                 "The resource was modified by another transaction. Please retry.", request);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ErrorResponse> handleExpiredJwt(ExpiredJwtException ex, HttpServletRequest request) {
+        log.warn("JWT token expired: {}", ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, "TOKEN_EXPIRED",
+                "Your session has expired. Please login again.", request);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidJwtSignature(SignatureException ex, HttpServletRequest request) {
+        log.warn("Invalid JWT signature: {}", ex.getMessage());
+        return buildResponse(HttpStatus.UNAUTHORIZED, "INVALID_TOKEN",
+                "Invalid authentication token.", request);
     }
 
     @ExceptionHandler(Exception.class)
